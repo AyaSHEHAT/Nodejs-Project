@@ -1,23 +1,21 @@
 const jwt=require("jsonwebtoken");
 
 module.exports=(req,res,next)=>{
-
     try
     {
         let token=req.get("authorization").split(" ")[1];
-         let decodedToken=jwt.verify(token,"pd track");
+         let decodedToken=jwt.verify(token,process.env.secret_key);
          req.token=decodedToken;
+         console.log(decodedToken);
         next();
     }catch(error)
     {
+        log
         error.message="not authenicated";
         error.status=401
        next(error);
     }
-   
-
 }
-
 
 module.exports.isAdmin=(req,res,next)=>{
     if(req.token.role=="admin")
@@ -30,8 +28,8 @@ module.exports.isAdmin=(req,res,next)=>{
     }
 }
 
-module.exports.isStudent=(req,res,next)=>{
-    if(req.token.role=="student")
+module.exports.isTeacher=(req,res,next)=>{
+    if(req.token.role=="teacher")
     next()
     else
     {
@@ -40,6 +38,7 @@ module.exports.isStudent=(req,res,next)=>{
         next(error);
     }
 }
+
 
 
 

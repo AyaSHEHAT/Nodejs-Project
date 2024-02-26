@@ -19,18 +19,25 @@ exports.getStudentById = (req, res, next) => {
 
         })
         .catch(error => next(error))
-
 }
+
+exports.getAllstudents = (req, res, next) => {
+    Student.find({})
+        .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch(error => next(error));
+};
 
 exports.insertStudent = (req, res, next) => {
     // creat object from student schema
     const object = new Student(req.body);
+    // const object = new Student(re);
 
     object.save()
         .then((data) => {
             res.status(201).json({
-                message: "added",
-                data
+                message: "added"
             });
         })
         .catch(error => next(error))
@@ -38,20 +45,34 @@ exports.insertStudent = (req, res, next) => {
 }
 
 exports.updateStudent = (request, response, next) => {
-    const stdId = request.body._id; 
+    const stdId = request.body._id;
     const newData = request.body;
-    Student.findByIdAndUpdate(stdId, newData, { new: true })
-        .then(updatedChild => {
-            if (!updatedChild) {
-                throw new Error('Child not found');
+    Student.findByIdAndUpdate(stdId, newData, {
+            new: true
+        })
+        .then(updatedStd => {
+            if (!updatedStd) {
+                throw new Error('student not found');
             }
-            response.json({ message: "Child data updated successfully", data: updatedChild });
+            response.json({
+                message: "student data updated successfully"
+            });
         })
         .catch(error => next(error));
 }
 
-exports.deleteStudent = (req, res, next) => {
-    res.status(200).json({
-        data: "deletedddd"
-    });
+exports.deleteStudentById = (req, res, next) => {
+    try {
+        const deletedStd = Student.findByIdAndDelete(req.body._id);
+        if (!deletedStd) {
+            return res.status(404).json({
+                error: "student not found"
+            });
+        }
+        res.status(200).json({
+            message: "Delete Successfuly"});
+    } catch (error) {
+        next(error);
+    }
+    
 }

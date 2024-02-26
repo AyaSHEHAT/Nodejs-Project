@@ -6,14 +6,14 @@ const schema=new mongoose.Schema({
         type: String,
         required: true
     },
-    supervisor: {
+    teachers: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'teachers'
       },
-    children: [
+    students: [
         {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'children'
+          type: Number,
+          ref: 'students'
         }
     ],
 });
