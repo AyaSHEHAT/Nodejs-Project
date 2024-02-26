@@ -11,7 +11,7 @@ exports.getAllteachers=(req,res,next)=>{
 }
 
 exports.insertTeacher=(req,res,next)=>{
-    const {firstname,lastname,password,email}    = new Teacher(req.body);
+    const {firstname,lastname,password,email}= new Teacher(req.body);
     const file=req;
     const teacher=new Teacher ({
         fullname:{
@@ -25,6 +25,7 @@ exports.insertTeacher=(req,res,next)=>{
     }
 
     )
+    console.log("from insert");
        teacher.save()
         .then((data) => {
             res.status(201).json({

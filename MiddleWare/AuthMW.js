@@ -10,7 +10,6 @@ module.exports=(req,res,next)=>{
         next();
     }catch(error)
     {
-        log
         error.message="not authenicated";
         error.status=401
        next(error);

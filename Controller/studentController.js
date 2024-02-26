@@ -55,7 +55,7 @@ exports.updateStudent = (request, response, next) => {
                 throw new Error('student not found');
             }
             response.json({
-                message: "student data updated successfully"
+                message: "student data updated successfully",updatedStd
             });
         })
         .catch(error => next(error));

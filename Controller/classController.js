@@ -5,7 +5,6 @@ exports.getAllClasses=(req,res,next)=>{
     .populate({path: "teachers",select:"fullname"})
     .populate({path:"students",select:{fullname:1}})
         .then((data) => {
-            console.log(classes);
             res.status(200).json(data);
         })
         .catch(error => next(error))
